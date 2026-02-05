@@ -12,10 +12,6 @@ header {
     padding: 30px;
 }
 
-.logo {
-    width: 120px;
-}
-
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
@@ -29,6 +25,11 @@ header {
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+}
+
+.product:hover {
+    transform: translateY(-5px);
 }
 
 .product h2 {
@@ -48,6 +49,7 @@ button {
     padding: 12px 20px;
     border-radius: 6px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 button:hover {
@@ -57,21 +59,27 @@ button:hover {
 .order-form {
     display: none;
     background: #fff;
-    margin: 40px;
+    margin: 40px auto;
     padding: 30px;
     border-radius: 12px;
+    max-width: 500px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .order-form input,
-.order-form textarea {
+.order-form textarea,
+.order-form select {
     width: 100%;
     margin-bottom: 15px;
     padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
 }
 
 footer {
     text-align: center;
     padding: 20px;
     background: #c89b3c;
-    color: white;
+    color: white; 
 }
