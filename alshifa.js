@@ -1,31 +1,57 @@
-function openOrder(product, price) {
-    document.getElementById("orderForm").style.display = "block";
-    document.getElementById("productName").value = product;
-    document.getElementById("productPrice").value = price;
-    window.scrollTo(0, document.body.scrollHeight);
+// Initialize EmailJS
+(function(){
+    emailjs.init("IkmUL78Og3fJsuiHb"); // Tumhara public key
+})();
+
+// Function to open the order form and set product
+function setOrder(product, price){
+    const formSection = document.querySelector(".order-form");
+    const productNameInput = document.getElementById("productName");
+    const productPriceInput = document.getElementById("productPrice");
+
+    if(formSection && productNameInput && productPriceInput){
+        productNameInput.value = product;
+        productPriceInput.value = price;
+        formSection.style.display = "block";  // Show form
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } else {
+        console.error("Order form elements not found!");
+    }
 }
 
-function confirmOrder(event) {
-    event.preventDefault();
+// Handle form submission
+document.addEventListener("DOMContentLoaded", function(){
+    const orderForm = document.getElementById("orderForm");
 
-    let product = document.getElementById("productName").value;
-    let price = document.getElementById("productPrice").value;
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let email = document.getElementById("email").value;
-    let address = document.getElementById("address").value;
+    orderForm.addEventListener("submit", function(e){
+        e.preventDefault();
 
-    let message = `AL-SHIFA Desi Ghee Order%0A
-Product: ${product}%0A
-Price: ${price} PKR%0A
-Name: ${name}%0A
-Phone: ${phone}%0A
-Email: ${email}%0A
-Address: ${address}`;
+        const quantitySelect = document.getElementById("quantityOption");
+        const otherQtyInput = document.getElementById("otherQuantity");
 
-    // WhatsApp
-    window.open(`https://wa.me/923208627050?text=${message}`, '_blank');
+        // Quantity validation
+        if(quantitySelect.value === "Other"){
+            if(otherQtyInput.value === "" || parseInt(otherQtyInput.value) <= 0){
+                alert("Please enter a valid quantity in grams.");
+                return;
+            }
+            document.querySelector('input[name="other_quantity"]').value = otherQtyInput.value + " grams";
+        } else {
+            document.querySelector('input[name="other_quantity"]').value = "";
+        }
 
-    // Email
-    window.location.href = `mailto:alshifa.food.official@gmail.com?subject=New Order - AL-SHIFA Desi Ghee&body=${message}`;
-}
+        // Send form via EmailJS
+        emailjs.sendForm(
+            "service_tagl8nd",   // Service ID
+            "template_4qqk9mu",  // Template ID
+            this                  // Form element
+        ).then(function(){
+            alert("Order submitted successfully! We will contact you soon.");
+            orderForm.reset();
+            document.getElementById("orderFormContainer").style.display = "none";
+        }, function(error){
+            console.error(error);
+            alert("Oops! Something went wrong. Please try again.");
+        });
+    });
+});
