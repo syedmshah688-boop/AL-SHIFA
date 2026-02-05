@@ -8,62 +8,82 @@
 <body>
 
 <header>
-    <img src="logo.png" alt="AL-SHIFA Desi Ghee" class="logo">
     <h1>AL-SHIFA Desi Ghee</h1>
     <p>Pure | Natural | Traditional</p>
 </header>
-<link rel="stylesheet" href="alshifa.css">
-<script src="alshifa.js"></script>
 
-
-
+<!-- Products Section -->
 <section class="products">
 
     <div class="product">
         <h2>500 Gram Desi Ghee</h2>
         <p class="price">2800 PKR</p>
-        <button onclick="openOrder('500g','2800')">Order Now</button>
+        <button onclick="setOrder('500 Grams','2800')">Order Now</button>
     </div>
 
     <div class="product">
         <h2>1 KG Desi Ghee</h2>
         <p class="price">5000 PKR</p>
-        <button onclick="openOrder('1 KG','5000')">Order Now</button>
+        <button onclick="setOrder('1 KG','5000')">Order Now</button>
     </div>
 
     <div class="product">
         <h2>2 KG Desi Ghee</h2>
         <p class="price">9900 PKR</p>
-        <button onclick="openOrder('2 KG','9900')">Order Now</button>
+        <button onclick="setOrder('2 KG','9900')">Order Now</button>
     </div>
 
     <div class="product">
         <h2>5 KG Desi Ghee</h2>
         <p class="price">24000 PKR</p>
-        <button onclick="openOrder('5 KG','24000')">Order Now</button>
+        <button onclick="setOrder('5 KG','24000')">Order Now</button>
     </div>
 
 </section>
 
-<section class="order-form" id="orderForm">
+<!-- Order Form Section -->
+<section class="order-form" id="orderFormContainer">
     <h2>Order Details</h2>
-    <form onsubmit="confirmOrder(event)">
-        <input type="hidden" id="productName">
-        <input type="hidden" id="productPrice">
+    <form id="orderForm">
+        <!-- Hidden product info -->
+        <input type="hidden" name="product_name" id="productName">
+        <input type="hidden" name="product_price" id="productPrice">
 
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="text" id="phone" placeholder="Phone Number" required>
-        <input type="email" id="email" placeholder="Email Address" required>
-        <textarea id="address" placeholder="Delivery Address" required></textarea>
+        <!-- User Details -->
+        <input type="text" name="customer_name" id="name" placeholder="Your Name" required>
+        <input type="tel" name="phone_number" id="phone" placeholder="Phone Number (03XXXXXXXXX)" pattern="03[0-9]{9}" required>
+        <input type="email" name="email" id="email" placeholder="Email Address" required>
+        <input type="text" name="city" id="city" placeholder="Your City" required>
+
+        <!-- Quantity -->
+        <label><strong>Select Quantity</strong></label>
+        <select name="quantity_option" id="quantityOption" required>
+            <option value="">-- Select Quantity --</option>
+            <option value="500 Grams">500 Grams</option>
+            <option value="1000 Grams (1 KG)">1000 Grams (1 KG)</option>
+            <option value="2000 Grams (2 KG)">2000 Grams (2 KG)</option>
+            <option value="5000 Grams (5 KG)">5000 Grams (5 KG)</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <input type="number" name="other_quantity" id="otherQuantity" placeholder="If Other, enter quantity in grams" min="100">
+
+        <!-- Delivery Address -->
+        <textarea name="address" id="address" placeholder="Delivery Address" required></textarea>
 
         <button type="submit">Confirm Order</button>
     </form>
 </section>
 
+
 <footer>
     <p>© 2026 AL-SHIFA Desi Ghee</p>
 </footer>
 
-<script src="script.js"></script>
+<!-- EmailJS Library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="alshifa.js"></script>
+<link rel="stylesheet" href="alshifa.css">
+
 </body>
 </html>
